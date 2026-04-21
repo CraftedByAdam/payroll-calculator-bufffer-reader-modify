@@ -5,24 +5,18 @@ import java.util.Scanner;
 
 public class Payroll {
     public static void main(String[] args) {
-        String fileName = "employees.csv";
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter the name of the file you want to copy from: ");
+        String nameOfFile = scanner.nextLine();
+        System.out.println("Enter the the name  of the file you want to copy to: ");
+        String nameOfFile2 = scanner.nextLine();
 
         try {
-            Scanner scanner = new Scanner(System.in);
 
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName));
-
-            System.out.print("Enter the name of the file employee to process: ");
-            String nameOfFileEmployee = scanner.next();
-            System.out.print("Enter the name of the payroll file to create: ");
-            String payrollFileName = scanner.next();
-
-            bufferedWriter.write(nameOfFileEmployee);
-            bufferedWriter.newLine();
-            bufferedWriter.write(payrollFileName);
-            bufferedWriter.close();
-
-            BufferedReader reader = new BufferedReader(new FileReader(fileName));
+            BufferedReader reader = new BufferedReader(new FileReader(nameOfFile));
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(nameOfFile,true));
             String line;
             
             while ((line = reader.readLine()) != null) {
@@ -33,13 +27,16 @@ public class Payroll {
                 double payRate = Double.parseDouble(tokens[3]);
 
                 Employee employee = new Employee(id, name, hoursWorked, payRate);
+                //outputLine = String.format("Employee ID: %d, Name: %s, Gross Pay: $%.2f%n");
 
-                System.out.printf("Employee ID: %d, Name: %s, Gross Pay: $%.2f%n",
-                        employee.getEmployeeId(), employee.getName(), employee.getGrossPay());
+
+               /* System.out.printf("Employee ID: %d, Name: %s, Gross Pay: $%.2f%n",
+                        employee.getEmployeeId(), employee.getName(), employee.getGrossPay());*/
             }
             reader.close();
+            bufferedWriter.close();
         } catch (IOException e) {
-            System.err.println("Error reading file: " + fileName);
+            System.err.println("Error reading file: " + nameOfFile);
         }
     }
 }
