@@ -1,16 +1,30 @@
 package com.pluralsight;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.util.Scanner;
 
 public class Payroll {
     public static void main(String[] args) {
         String fileName = "employees.csv";
 
         try {
+            Scanner scanner = new Scanner(System.in);
+
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName));
+
+            System.out.print("Enter the name of the file employee to process: ");
+            String nameOfFileEmployee = scanner.next();
+            System.out.print("Enter the name of the payroll file to create: ");
+            String payrollFileName = scanner.next();
+
+            bufferedWriter.write(nameOfFileEmployee);
+            bufferedWriter.newLine();
+            bufferedWriter.write(payrollFileName);
+            bufferedWriter.close();
+
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
             String line;
+            
             while ((line = reader.readLine()) != null) {
                 String[] tokens = line.split("\\|");
                 int id = Integer.parseInt(tokens[0]);
